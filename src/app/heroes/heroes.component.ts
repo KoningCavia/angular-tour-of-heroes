@@ -1,5 +1,6 @@
 // Component is always imported for a component
 import { Component } from '@angular/core';
+import {Hero} from "../hero";
 
 
 @Component({
@@ -11,6 +12,9 @@ import { Component } from '@angular/core';
 
 // allways export the component class, so it can be imported elsewhere
 export class HeroesComponent {
-  hero = 'windstorm';
+  hero: Hero = {
+    id: 1,
+    name: 'Windstorm'
+  };
 
 }
