@@ -1,4 +1,11 @@
 <!--The '|' in angular is called a pipe and it's agood way to format strings. therre are many built-in pipe methods and you can create mew ones/-->
 <h2>{{hero.name | uppercase}} Details</h2>
 <div><span>id: </span>{{hero.id}}</div>
-<div><span>name: </span>{{hero.name}}</div>
+<div>
+  <label for="name">Hero name: </label>
+<!--  ngModel is angulars two-way binding method. It is not available by default. You need FormsModule to opt-in (see app.module.ts) -->
+  <input id="name" [(ngModel)]="hero.name" placeholder="name">
+</div>
+
+
+<!--<div><span>name: </span>{{hero.name}}</div>-->
