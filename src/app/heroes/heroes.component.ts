@@ -14,10 +14,11 @@ import {HEROES} from "../mock-heroes";
 
 // allways export the component class, so it can be imported elsewhere
 export class HeroesComponent {
-  hero: Hero = {
-    id: 1,
-    name: 'Windstorm'
-  };
+  selectedHero?: Hero;
+
+  onSelect(hero: Hero): void {
+    this.selectedHero = hero;
+  }
 
   heroes = HEROES;
 }

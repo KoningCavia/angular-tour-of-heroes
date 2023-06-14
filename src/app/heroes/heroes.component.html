@@ -3,19 +3,22 @@
 <!--make a list that shows all heros. make a recursive method that creates a list item for each hero. Put a button inside the listitem to make the heroinfo clickable-->
 <ul class="heroes">
   <li *ngFor="let hero of heroes">
-    <button type="button">
+<!--    [class.selected]= snap ik niet helemaal-->
+    <button [class.selected]="hero === selectedHero" type="button" (click)="onSelect(hero)">
       <span class="badge">{{hero.id}}</span>
       <span class="name">{{hero.name}}</span>
     </button>
   </li>
 </ul>
 
-<h2>{{hero.name | uppercase}} Details</h2>
-<div><span>id: </span>{{hero.id}}</div>
-<div>
-  <label for="name">Hero name: </label>
-<!--  ngModel is angulars two-way binding method. It is not available by default. You need FormsModule to opt-in (see app.module.ts) -->
-  <input id="name" [(ngModel)]="hero.name" placeholder="name">
+<div *ngIf="selectedHero">
+  <h2>{{selectedHero.name | uppercase}} Details</h2>
+  <div>id: {{selectedHero.id}}</div>
+  <div>
+  <label for="hero-name">Hero name: </label>
+    <!--  ngModel is angulars two-way binding method. It is not available by default. You need FormsModule to opt-in (see app.module.ts) -->
+    <input id="hero-name" [(ngModel)]="selectedHero.name" placeholder="name">
+  </div>
 </div>
 
 
