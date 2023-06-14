@@ -1,6 +1,8 @@
 // Component is always imported for a component
 import { Component } from '@angular/core';
 import {Hero} from "../hero";
+//Importing the simple HEROES list made somewhere else.
+import {HEROES} from "../mock-heroes";
 
 
 @Component({
@@ -17,4 +19,5 @@ export class HeroesComponent {
     name: 'Windstorm'
   };
 
+  heroes = HEROES;
 }

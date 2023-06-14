@@ -1,4 +1,15 @@
 <!--The '|' in angular is called a pipe and it's agood way to format strings. therre are many built-in pipe methods and you can create mew ones/-->
+<h2>My Heroes</h2>
+<!--make a list that shows all heros. make a recursive method that creates a list item for each hero. Put a button inside the listitem to make the heroinfo clickable-->
+<ul class="heroes">
+  <li *ngFor="let hero of heroes">
+    <button type="button">
+      <span class="badge">{{hero.id}}</span>
+      <span class="name">{{hero.name}}</span>
+    </button>
+  </li>
+</ul>
+
 <h2>{{hero.name | uppercase}} Details</h2>
 <div><span>id: </span>{{hero.id}}</div>
 <div>
