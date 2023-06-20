@@ -14,6 +14,7 @@ import {HEROES} from "../mock-heroes";
 
 // allways export the component class, so it can be imported elsewhere
 export class HeroesComponent {
+  //de heroesComponent class is dus niet de hero class met diens variabelen. die staat in de hero.ts interface beschreven. een Component is een frontend view, een interface is functioneel een klasse bescrhijving
   selectedHero?: Hero;
 
   onSelect(hero: Hero): void {
