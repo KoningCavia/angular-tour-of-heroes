@@ -3,10 +3,15 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes} from "@angular/router";
 //is the view that should be showms
 import { HeroesComponent} from "./heroes/heroes.component";
+import {DashboardComponent} from "./dashboard/dashboard.component";
+import {HeroDetailComponent} from "./hero-detail/hero-detail.component";
 
 //a typical angular route has 1. a path (the url), 2. a component (the view)
 const routes: Routes = [
-  { path: 'heroes', component: HeroesComponent }
+  { path: '', redirectTo:'/dashboard', pathMatch: 'full'},
+  { path: 'heroes', component: HeroesComponent },
+  { path: 'dashboard', component: DashboardComponent },
+  { path: 'detail/:id', component: HeroDetailComponent} //:id is a placeholder for a specific hero id.
 ]
 
 
