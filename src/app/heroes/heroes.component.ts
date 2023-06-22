@@ -17,10 +17,9 @@ import { MessageService} from "../message.service";
 export class HeroesComponent implements OnInit{
   //de heroesComponent class is dus niet de hero class met diens variabelen. die staat in de hero.ts interface beschreven. een Component is een frontend view, een interface is functioneel een klasse bescrhijving
   //that being said. dit zijjn wel de variabelen die deze view nodig heeft "nameVariable?: nameClass".
-  selectedHero?: Hero;
   heroes: Hero[] = [];
 
-  constructor(private heroService: HeroService, private messageService: MessageService) {}
+  constructor(private heroService: HeroService) {}
 
 
   //basically on init, call the method getHeroes
@@ -28,10 +27,6 @@ export class HeroesComponent implements OnInit{
     this.getHeroes();
   }
 
-  onSelect(hero: Hero): void {
-    this.selectedHero = hero;
-    this.messageService.add(`HeroesComponent: Selected hero id=${hero.id}`);
-  }
 
 // this method uses the subscribe part to deal with asynchronous calls which return an observable object, rather than just an object.
   getHeroes(): void {

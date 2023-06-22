@@ -3,11 +3,13 @@
 <!--make a list that shows all heros. make a recursive method that creates a list item for each hero. Put a button inside the listitem to make the heroinfo clickable-->
 <ul class="heroes">
   <li *ngFor="let hero of heroes">
-<!--    [class.selected]= hero === selectedHeroe is boolean. Dus class.selected = true (if this hero is the selected hero)-->
-    <button [class.selected]="hero === selectedHero" type="button" (click)="onSelect(hero)">
-      <span class="badge">{{hero.id}}</span>
-      <span class="name">{{hero.name}}</span>
-    </button>
+
+    <a routerLink="/detail/{{hero.id}}">
+      <span class="badge">{{hero.id}}</span> {{hero.name}}
+    </a>
+<!--      <span class="badge">{{hero.id}}</span>-->
+<!--      <span class="name">{{hero.name}}</span>-->
+
   </li>
 </ul>
 
