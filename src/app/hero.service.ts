@@ -21,6 +21,12 @@ export class HeroService {
     this.messageService.add('HeroService: fetched heroes');
     return heroes;
   }
+  getHero(id: number): Observable<Hero> {
+    //.find(element => element.value===value
+    const hero = HEROES.find(h => h.id===id)!;
+    this.messageService.add(`HeroService: fetched hero id =${id}`);
+    return of(hero);
+  }
 
   //Here is a typical "service in service scenario" where the singleton messageservice is injected in heroservice, which is injected into the heroesComponent.
 
