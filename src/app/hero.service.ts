@@ -16,6 +16,7 @@ import { catchError, map, tap } from "rxjs";
 export class HeroService {
 
   private heroesUrl = 'api/heroes';
+  httpOptions = { headers: new HttpHeaders({'Content-Type': 'application/json'}) }
 
   constructor(
     private http: HttpClient,
@@ -36,13 +37,26 @@ export class HeroService {
       tap(_ => this.log(`fetched hero id=${id}`)),
       catchError(this.handleError<Hero>(`getHero id=${id}`))
     )
-
-
-    //.find(element => element.value===value
     const hero = HEROES.find(h => h.id === id)!;
     this.messageService.add(`HeroService: fetched hero id =${id}`);
     return of(hero);
   }
+
+  /** PUT: update the hero on the server */
+  updateHero(hero: Hero): Observable<any> {
+    return this.http.put(this.heroesUrl, hero, this.httpOptions).pipe(
+      tap(_ => console.log(`updated hero id= ${hero.id}`)),
+      catchError(this.handleError<any>('updateHero'))
+    );
+  }
+
+  addHero(hero: Hero): Observable<Hero> {
+    return this.http.post<Hero>(this.heroesUrl, hero, this.httpOptions).pipe(
+      tap((newHero:Hero) => this.log(`added hero w/ id/${newHero.id}`)),
+      catchError(this.handleError<Hero>('AddHero'))
+    )
+  }
+
 
 /*
   Handle http operation that faield.
