@@ -13,13 +13,11 @@
 <!--make a list that shows all heros. make a recursive method that creates a list item for each hero. Put a button inside the listitem to make the heroinfo clickable-->
 <ul class="heroes">
   <li *ngFor="let hero of heroes">
-
     <a routerLink="/detail/{{hero.id}}">
       <span class="badge">{{hero.id}}</span> {{hero.name}}
     </a>
-<!--      <span class="badge">{{hero.id}}</span>-->
-<!--      <span class="name">{{hero.name}}</span>-->
-
+    <button type="button" class="delete" title="delete hero"
+            (click)="delete(hero)">x</button>
   </li>
 </ul>
 
