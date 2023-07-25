@@ -1,28 +1,29 @@
 import { Injectable } from '@angular/core';
-import { Hero} from "./hero";
-import { HEROES } from "./mock-heroes";
-import {Observable, of} from "rxjs";
-import { MessageService } from "./message.service";
 import { HttpClient, HttpHeaders} from "@angular/common/http";
+
+import {Observable, of} from "rxjs";
 import { catchError, map, tap } from "rxjs";
 
-@Injectable({
-  // 1  injectables can be made available in several methods. in this case in the service itself by providing the line "providedIn: 'root' ".
-  // This makes a single instance of the service, which is available for every class
-  providedIn: 'root'
-})
+import { Hero} from "./hero";
+import { MessageService } from "./message.service";
 
+
+// 1  injectables can be made available in several methods. in this case in the service itself by providing the line "providedIn: 'root' ".
+// This makes a single instance of the service, which is available for every class
+@Injectable({  providedIn: 'root' })
 // 2 a service can get its (hero) information from anywhere. web storage, local or a mock data source.
 export class HeroService {
 
-  private heroesUrl = 'api/heroes';
+  private heroesUrl = 'api/heroes'; // URL to web api
+
   httpOptions = { headers: new HttpHeaders({'Content-Type': 'application/json'}) }
 
   constructor(
     private http: HttpClient,
-    private messageService: MessageService)
-    {}
+    private messageService: MessageService) {}
 
+
+  /** Get heroes from the server */
   getHeroes(): Observable<Hero[]> {
     return this.http.get<Hero[]>(this.heroesUrl)
       .pipe(
@@ -31,15 +32,41 @@ export class HeroService {
       );
   }
 
+  /** Get hero by id. Return undefined when hero is not found */
+  getHeroNo404<Data>(id: number): Observable<Hero> {
+    const url = `${this.heroesUrl}/?id=${id}`;
+    return this.http.get<Hero[]>(url)
+      .pipe(
+        map(heroes => heroes[0]), //returns a {0|1} element array
+        tap(h => {
+          const outcome = h ? 'fetched' : 'did not find';
+          this.log(`${outcome} hero id=${id}`);
+        }),
+        catchError(this.handleError<Hero>(`getHero id=${id}`))
+      );
+  }
+
+
   getHero(id: number): Observable<Hero> {
     const url = `${this.heroesUrl}/${id}`;
     return this.http.get<Hero>(url).pipe(
       tap(_ => this.log(`fetched hero id=${id}`)),
       catchError(this.handleError<Hero>(`getHero id=${id}`))
-    )
-    const hero = HEROES.find(h => h.id === id)!;
-    this.messageService.add(`HeroService: fetched hero id =${id}`);
-    return of(hero);
+    );
+  }
+
+  /** get heroes whos name contains search term */
+  searchHeroes(term: string): Observable<Hero[]> {
+    if (!term.trim()) {
+      // if not search term, return empty hero array.
+      return of([]);
+    }
+    return this.http.get<Hero[]>(`${this.heroesUrl}/?name=${term}`).pipe(
+      tap(x => x.length ?
+        this.log(`found heroes matching "${term}"`) :
+        this.log(`no heroes matching "${term}"`)),
+      catchError(this.handleError<Hero[]>('searchHeroes', []))
+    );
   }
 
   /** PUT: update the hero on the server */
@@ -68,19 +95,7 @@ export class HeroService {
     );
   }
 
-  /** get heroes whos name contains search term */
-  searchHeroes(term: string): Observable<Hero[]> {
-    if (!term.trim()) {
-      // if not search term, return empty hero array.
-      return of([]);
-    }
-    return this.http.get<Hero[]>(`${this.heroesUrl}/?ma,e=${term}`).pipe(
-      tap(x => x.length ?
-      this.log(`found heroes matching "${term}"`) :
-        this.log(`no heroes matching "${term}"`)),
-      catchError(this.handleError<Hero[]>('searchHeroes', []))
-    );
-  }
+
 
 
 /*
