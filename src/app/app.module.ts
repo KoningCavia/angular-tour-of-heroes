@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-//formsModule is imported here. but needs to be declared at: "@Ngmodule -> imports" lower in this file
 import { FormsModule} from "@angular/forms";
 
 import { AppComponent } from './app.component';
@@ -11,7 +10,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { HttpClientModule} from "@angular/common/http";
 import { HttpClientInMemoryWebApiModule} from "angular-in-memory-web-api";
-import { InMemoryDbService} from "angular-in-memory-web-api";
 import {InMemoryDataService} from "./in-memory-data.service";
 import { HeroSearchComponent } from './hero-search/hero-search.component';
 
