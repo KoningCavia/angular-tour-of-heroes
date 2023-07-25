@@ -69,14 +69,6 @@ export class HeroService {
     );
   }
 
-  /** PUT: update the hero on the server */
-  updateHero(hero: Hero): Observable<any> {
-    return this.http.put(this.heroesUrl, hero, this.httpOptions).pipe(
-      tap(_ => console.log(`updated hero id= ${hero.id}`)),
-      catchError(this.handleError<any>('updateHero'))
-    );
-  }
-
   /** post: save a new hero on the server*/
   addHero(hero: Hero): Observable<Hero> {
     return this.http.post<Hero>(this.heroesUrl, hero, this.httpOptions).pipe(
@@ -86,19 +78,24 @@ export class HeroService {
   }
 
   /** delete: remove a hero from the server */
-
   deleteHero(id: number): Observable<Hero> {
     const url = `${this.heroesUrl}/${id}`;
+
     return this.http.delete<Hero>(url, this.httpOptions).pipe(
       tap(_ => this.log(`deleted hero id=$`)),
       catchError(this.handleError<Hero>('deleteHero'))
     );
   }
 
+  /** PUT: update the hero on the server */
+  updateHero(hero: Hero): Observable<any> {
+    return this.http.put(this.heroesUrl, hero, this.httpOptions).pipe(
+      tap(_ => console.log(`updated hero id= ${hero.id}`)),
+      catchError(this.handleError<any>('updateHero'))
+    );
+  }
 
-
-
-/*
+/**
   Handle http operation that faield.
   Let the app continue.private
   @param operation - name of the operation that failed
@@ -117,7 +114,7 @@ export class HeroService {
     }
   }
 
-  // Log a HeroService message with the MessageService
+  /** Log a HeroService message with the MessageService */
   private log(message: string) {
     this.messageService.add(`HeroService: ${message}`);
   }
